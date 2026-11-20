@@ -1,0 +1,18 @@
+spring:
+  ai:
+    model:
+      chat: ollama
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: llama3.2
+        temperature: 0.7
+        num-predict: 1000
+      embedding:
+        model: nomic-embed-text
+
+  servlet:
+      multipart:
+        max-file-size: 20MB
+        max-request-size: 50MB
+
