@@ -25,6 +25,13 @@ import java.util.Locale;
 @Service
 public class DocumentExtractionServiceImpl implements DocumentExtractionService {
 
+    private final DocumentExtractorFactory extractorFactory;
+
+    public DocumentExtractionServiceImpl (DocumentExtractorFactory extractorFactory)
+    {
+        this.extractorFactory = extractorFactory;
+    }
+
     public List<Document> extract(MultipartFile file) {
 
         if (file == null || file.isEmpty()) {
@@ -40,14 +47,11 @@ public class DocumentExtractionServiceImpl implements DocumentExtractionService 
         String extension = getFileExtension(filename);
 
         try {
-            List<Document> documents = switch (extension) {
-                case "pdf" -> extractPdf(file);
-                case "txt" -> extractTxt(file);
-                case "md" -> extractMarkdown(file);
-                case "docx" -> extractDocx(file);
-                default -> throw new IllegalArgumentException(
-                        "Unsupported file format: " + extension);
-            };
+
+            DocumentExtractor extractor =
+                extractorFactory.getExtractor(file.getContentType());
+
+            List<Document> documents = extractor.extract(file);
 
             if (documents == null || documents.isEmpty()) {
                 throw new IllegalArgumentException(
