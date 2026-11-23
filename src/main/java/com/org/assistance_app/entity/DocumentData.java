@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class DocumentData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false, length = 255)

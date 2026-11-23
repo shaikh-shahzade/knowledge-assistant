@@ -11,12 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import com.org.assistance_app.dto.ErrorResponse;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -34,13 +35,6 @@ public class GlobalExceptionHandler {
         return buildResponse(ex.getStatus(), ex.getMessage(), request);
     }
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(
-            CustomException ex,
-            HttpServletRequest request) {
-
-        return buildResponse(ex.getStatus(), ex.getMessage(), request);
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(
@@ -62,8 +56,6 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request) {
 
-        log.error("Unexpected error occurred", ex);
-
         return buildResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "An unexpected error occurred",
@@ -81,10 +73,12 @@ public class GlobalExceptionHandler {
                 status.value(),
                 status.getReasonPhrase(),
                 message,
-                request.getRequestURI()
+                request.getRequestURI(), message, message, null
         );
 
         return ResponseEntity.status(status).body(response);
     }
 
 }
+
+

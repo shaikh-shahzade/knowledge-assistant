@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.org.assistance_app.service.DocumentExtractionService;
+import com.org.assistance_app.service.DocumentExtractor;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -69,10 +70,6 @@ public class DocumentExtractionServiceImpl implements DocumentExtractionService 
                     .filter(document -> !document.getText().isBlank())
                     .toList();
 
-        } catch (IOException exception) {
-            throw new IllegalArgumentException(
-                    "Failed to read uploaded file: " + filename,
-                    exception);
         } catch (Exception exception) {
             throw new IllegalArgumentException(
                     "Document extraction failed for: " + filename,
