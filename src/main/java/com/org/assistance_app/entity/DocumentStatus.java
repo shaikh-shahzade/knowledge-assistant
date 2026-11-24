@@ -4,5 +4,7 @@ public enum DocumentStatus {
 
     PROCESSING,
     COMPLETED,
-    FAILED
+    FAILED,
+    UPLOADED,
+    UPLOAD_FAILED
 }
