@@ -62,4 +62,11 @@ public class DocumentData {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    @Column(name = "storage_key", length = 100)
+    private String storageKey;
+
+    @Column(name = "storage_type", length = 100)
+    private String storageType;
+
 }

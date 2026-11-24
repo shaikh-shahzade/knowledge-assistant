@@ -1,4 +1,4 @@
-package com.org.assistance_app.service;
+package com.org.assistance_app.serviceImpl;
 
 
 import java.io.ByteArrayInputStream;
@@ -14,6 +14,7 @@ import com.org.assistance_app.entity.DocumentData;
 import com.org.assistance_app.entity.DocumentStatus;
 import com.org.assistance_app.exception.DocumentException;
 import com.org.assistance_app.repository.DocumentRepository;
+import com.org.assistance_app.service.DocumentStorageService;
 import com.org.assistance_app.serviceImpl.DocumentStorageFactory;
 
 import lombok.RequiredArgsConstructor;
