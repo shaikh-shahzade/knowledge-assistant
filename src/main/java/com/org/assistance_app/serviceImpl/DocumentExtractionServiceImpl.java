@@ -15,6 +15,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.org.assistance_app.document.DocumentExtractorFactory;
 import com.org.assistance_app.service.DocumentExtractionService;
 import com.org.assistance_app.service.DocumentExtractor;
 

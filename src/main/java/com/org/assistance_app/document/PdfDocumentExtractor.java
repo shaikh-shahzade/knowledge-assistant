@@ -1,9 +1,10 @@
-package com.org.assistance_app.serviceImpl;
+package com.org.assistance_app.document;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -13,29 +14,28 @@ import com.org.assistance_app.exception.DocumentException;
 import com.org.assistance_app.service.DocumentExtractor;
 
 @Component
-public class TextDocumentExtractor implements DocumentExtractor {
+public class PdfDocumentExtractor implements DocumentExtractor {
 
-   @Override
+    @Override
     public boolean supports(String contentType) {
-        return MediaType.TEXT_PLAIN_VALUE.equals(contentType);
+        return MediaType.APPLICATION_PDF_VALUE.equals(contentType);
     }
 
     @Override
     public List<Document> extract(MultipartFile file) {
         try {
-            String content = new String(
-                    file.getBytes(),
-                    StandardCharsets.UTF_8
-            );
+            PagePdfDocumentReader reader
+                    = new PagePdfDocumentReader(
+                            new ByteArrayResource(file.getBytes())
+                    );
 
-            return List.of(new Document(content));
+            return reader.get();
         } catch (Exception ex) {
             throw new DocumentException(
-                    "Failed to extract text document",
+                    "Failed to extract PDF document",
                     HttpStatus.UNPROCESSABLE_ENTITY,
                     ex
             );
         }
     }
-    
 }

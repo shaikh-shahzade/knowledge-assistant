@@ -1,5 +1,5 @@
 
-package com.org.assistance_app.serviceImpl;
+package com.org.assistance_app.document;
 
 import java.io.IOException;
 import java.util.List;

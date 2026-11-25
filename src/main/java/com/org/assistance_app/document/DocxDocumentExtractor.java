@@ -1,4 +1,4 @@
-package com.org.assistance_app.serviceImpl;
+package com.org.assistance_app.document;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

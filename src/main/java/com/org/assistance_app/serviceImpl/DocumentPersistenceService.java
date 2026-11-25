@@ -1,21 +1,20 @@
 package com.org.assistance_app.serviceImpl;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import org.springframework.ai.document.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.org.assistance_app.document.DocumentStorageFactory;
 import com.org.assistance_app.entity.DocumentData;
 import com.org.assistance_app.entity.DocumentStatus;
 import com.org.assistance_app.exception.DocumentException;
 import com.org.assistance_app.repository.DocumentRepository;
 import com.org.assistance_app.service.DocumentStorageService;
-import com.org.assistance_app.serviceImpl.DocumentStorageFactory;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +42,8 @@ public class DocumentPersistenceService {
 
         try (InputStream inputStream = new ByteArrayInputStream(content)) {
 
-            DocumentStorageService storage =
-                    storageFactory.getStorage(storageType);
+            DocumentStorageService storage
+                    = storageFactory.getStorage(storageType);
 
             storage.store(
                     storageKey,
@@ -90,8 +89,8 @@ public class DocumentPersistenceService {
         }
 
         try {
-            DocumentStorageService storage =
-                    storageFactory.getStorage(document.getStorageType());
+            DocumentStorageService storage
+                    = storageFactory.getStorage(document.getStorageType());
 
             return storage.load(document.getStorageKey());
 
@@ -115,8 +114,8 @@ public class DocumentPersistenceService {
         DocumentData document = getDocument(documentId);
 
         try {
-            DocumentStorageService storage =
-                    storageFactory.getStorage(document.getStorageType());
+            DocumentStorageService storage
+                    = storageFactory.getStorage(document.getStorageType());
 
             storage.delete(document.getStorageKey());
 
@@ -140,8 +139,8 @@ public class DocumentPersistenceService {
 
         DocumentData document = getDocument(documentId);
 
-        DocumentStorageService storage =
-                storageFactory.getStorage(document.getStorageType());
+        DocumentStorageService storage
+                = storageFactory.getStorage(document.getStorageType());
 
         return storage.exists(document.getStorageKey());
     }
@@ -156,5 +155,13 @@ public class DocumentPersistenceService {
                         "Document not found: " + documentId,
                         HttpStatus.NOT_FOUND
                 ));
+    }
+
+    /**
+     * Retrieve document metadata.
+     */
+    public List<DocumentData> getAllDocuments() {
+
+        return documentRepository.findAll();
     }
 }
